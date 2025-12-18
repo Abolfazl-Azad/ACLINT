@@ -9,7 +9,7 @@ module Output_wrapper #(
     input rst,
     input memRead,
     input [ADDR_WIDTH-1:0] address_CLINT,
-    input [DATA_IN_WIDTH-1:0] intrupt_ID,
+    input [DATA_IN_WIDTH-1:0] dataIn,
 
     output [DATA_OUT_WIDTH-1 : 0] dataout_Output_wrapper,
     output memReady
@@ -23,7 +23,7 @@ wire co;
 Output_wrapper_datapth datapath (
     .clk(clk),
     .rst(rst),
-    .intrupt_ID(intrupt_ID),
+    .dataIn(dataIn),
     .iniCnt(iniCnt),
     .incCnt(incCnt),
     .initValue(3'b0),

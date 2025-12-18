@@ -12,7 +12,7 @@ module tb_Output_wrapper;
     reg rst;
     reg memRead, memReady;
     reg [ADDR_WIDTH-1:0] address_CLINT;
-    reg [DATA_IN_WIDTH-1:0] intrupt_ID;
+    reg [DATA_IN_WIDTH-1:0] dataIn;
 
     // Output
     wire [DATA_OUT_WIDTH-1:0] dataout_Output_wrapper;
@@ -31,7 +31,7 @@ module tb_Output_wrapper;
         .rst(rst),
         .memRead(memRead),
         .address_CLINT(address_CLINT),
-        .intrupt_ID(intrupt_ID),
+        .dataIn(dataIn),
         .dataout_Output_wrapper(dataout_Output_wrapper),
         .memReady (memReady)
     );
@@ -42,7 +42,7 @@ module tb_Output_wrapper;
         rst = 1;
         memRead = 0;
         address_CLINT = 32'h02000000;
-        intrupt_ID = 64'h00000000; // start with 0
+        dataIn = 64'h00000000; // start with 0
 
         // Release reset
         #12;
@@ -54,7 +54,7 @@ module tb_Output_wrapper;
         // Assert memRead for 1 cycle
         memRead = 1;
         #10; 
-        intrupt_ID = 64'h11223344556678;
+        dataIn = 64'h11223344556678;
 
         // Keep simulation running to observe all bytes
         #100;
@@ -64,8 +64,8 @@ module tb_Output_wrapper;
 
     // Monitor outputs
     initial begin
-        $monitor("Time=%0t | memRead=%b | intrupt_ID=%h | dataout=%h", 
-                 $time, memRead, intrupt_ID, dataout_Output_wrapper);
+        $monitor("Time=%0t | memRead=%b | dataIn=%h | dataout=%h", 
+                 $time, memRead, dataIn, dataout_Output_wrapper);
     end
 
 endmodule
