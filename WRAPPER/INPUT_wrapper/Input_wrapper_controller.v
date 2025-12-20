@@ -1,7 +1,7 @@
 `timescale 1ns/1ns
 
 `define IDLE      2'b00
-`define FIRST_INC_CNT 2'b01
+`define Validation 2'b01
 `define GET_DATA  2'b10
 
 module Input_wrapper_controller #(parameter ADDR_WIDTH = 32)(
@@ -46,9 +46,13 @@ module Input_wrapper_controller #(parameter ADDR_WIDTH = 32)(
             `GET_DATA: 
             begin
                 if (co)
-                    n_state = `IDLE;
+                    n_state = `Validation;
                 else
                     n_state = `GET_DATA;
+            end
+
+            `Validation:begin
+                 n_state <= `IDLE;
             end
 
             default: n_state = `IDLE;
@@ -71,7 +75,7 @@ module Input_wrapper_controller #(parameter ADDR_WIDTH = 32)(
                     En = 1'b1;
                     incCnt = 1'b1;
                 end
-                else 
+                else
                     iniCnt = 1'b1;
             end
 
@@ -80,12 +84,15 @@ module Input_wrapper_controller #(parameter ADDR_WIDTH = 32)(
                 if (co) begin
                     En = 1'b0;
                     incCnt = 1'b0;
-                    Valid_Data = 1'b1;
                 end
                 else begin
                     En = 1'b1;
                     incCnt = 1'b1;
                 end
+            end
+
+            `Validation: begin 
+                Valid_Data = 1'b1;
             end
         endcase
     end

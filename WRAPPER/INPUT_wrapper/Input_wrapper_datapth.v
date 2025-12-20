@@ -56,13 +56,12 @@ module Input_wrapper_datapath #(
     );
 
     always @(*) begin
-        if (((offset == MTIMECMP_OFFSET) || (offset == MSIP_OFFSET))||(offset == MTIMECMP_OFFSET))
+        if (((offset == MTIME_OFFSET) || (offset == MSIP_OFFSET))||(offset == MTIMECMP_OFFSET))
         begin
             correct_address = 1'b1;
         end
         else
             correct_address = 1'b0;
     end
-
 endmodule
 
